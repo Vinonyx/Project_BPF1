@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\BarangMasuk;
+use App\Models\BarangKeluar;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -34,23 +36,23 @@ class DashboardController extends Controller
 
     public function barang_masuk()
     {
-        $stocks = BarangMasuk::select(DB::raw('SUM(quantity) as total_quantity'), DB::raw('MONTH(created_at) as month'))
-            ->groupBy(DB::raw('MONTH(created_at)'))
+        $currentYear = Carbon::now()->year;
+        $stocks = BarangMasuk::select(DB::raw('SUM(quantity) as total_quantity'), DB::raw('MONTH(tanggal_masuk) as month'))
+            ->whereYear('tanggal_masuk', $currentYear)
+            ->groupBy(DB::raw('MONTH(tanggal_masuk)'))
             ->get();
 
-        $months = [];
-        $quantities = [];
+        return response()->json($stocks);
+    }
 
-        foreach ($stocks as $stock) {
-            $months[] = $stock->month;
-            $quantities[] = $stock->total_quantity;
-        }
+    public function barang_keluar()
+    {
+        $currentYear = Carbon::now()->year;
+        $stocks = BarangKeluar::select(DB::raw('SUM(quantity) as total_quantity'), DB::raw('MONTH(tanggal_keluar) as month'))
+            ->whereYear('tanggal_keluar', $currentYear)
+            ->groupBy(DB::raw('MONTH(tanggal_keluar)'))
+            ->get();
 
-        $chartData = [
-            'months' => $months,
-            'quantities' => $quantities,
-        ];
-
-        return response()->json($chartData); // Mengirim data sebagai respons JSON
+        return response()->json($stocks);
     }
 }

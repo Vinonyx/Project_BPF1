@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
-use App\Models\BarangMasuk;
 use App\Http\Controllers\Controller;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -95,16 +93,5 @@ class BarangController extends Controller
         Alert::success('Berhasil', 'Data Berhasil Dihapus!');
 
         return redirect('/list');
-    }
-
-    public function barangMasuk()
-    {
-        $currentYear = Carbon::now()->year;
-        $stocks = BarangMasuk::select(DB::raw('SUM(quantity) as total_quantity'), DB::raw('MONTH(tanggal_masuk) as month'))
-            ->whereYear('tanggal_masuk', $currentYear)
-            ->groupBy(DB::raw('MONTH(tanggal_masuk)'))
-            ->get();
-        
-        return response()->json($stocks);
     }
 }

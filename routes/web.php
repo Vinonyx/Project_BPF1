@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangKeluarController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +27,8 @@ Auth::routes();
 
 //Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/chart-barang-masuk', [DashboardController::class, 'barang_masuk'])->name('chart-barang-masuk');
+Route::get('/chart-barang_masuk', [DashboardController::class, 'barang_masuk'])->name('chart.barang_masuk');
+Route::get('/chart-barang_keluar', [DashboardController::class, 'barang_keluar'])->name('chart.barang_keluar');
 
 //List Barang
 Route::get('/list', [BarangController::class, 'index'])->name('list');
@@ -38,11 +40,9 @@ Route::post('/list/update/{id}', [BarangController::class, 'update'])->name('lis
 Route::get('/barang-masuk', [BarangMasukController::class, 'index'])->name('barang-masuk');
 Route::post('/barang-masuk/store/{id}', [BarangMasukController::class, 'store'])->name('barang-masuk.store');
 Route::get('/history-barang-masuk', [BarangMasukController::class, 'history'])->name('history-barang-masuk');
+Route::get('/cetak-barang-masuk', [BarangMasukController::class, 'history'])->name('cetak-barang-masuk');
 
 //Barang Keluar
 Route::get('/barang-keluar', [BarangKeluarController::class, 'index'])->name('barang-keluar');
 Route::post('/barang-keluar/store/{id}', [BarangKeluarController::class, 'store'])->name('barang-keluar.store');
 Route::get('/history-barang-keluar', [BarangKeluarController::class, 'history'])->name('history-barang-keluar');
-
-// Barang haram
-Route::get('/api', [BarangController::class, 'barangMasuk'])->name('api');

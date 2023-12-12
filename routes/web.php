@@ -40,7 +40,6 @@ Route::post('/list/update/{id}', [BarangController::class, 'update'])->name('lis
 Route::get('/barang-masuk', [BarangMasukController::class, 'index'])->name('barang-masuk');
 Route::post('/barang-masuk/store/{id}', [BarangMasukController::class, 'store'])->name('barang-masuk.store');
 Route::get('/history-barang-masuk', [BarangMasukController::class, 'history'])->name('history-barang-masuk');
-Route::get('/cetak-barang-masuk', [BarangMasukController::class, 'history'])->name('cetak-barang-masuk');
 
 //Barang Keluar
 Route::get('/barang-keluar', [BarangKeluarController::class, 'index'])->name('barang-keluar');

@@ -4,7 +4,7 @@
     <h1 class="h3 mb-4 text-gray-800">History Barang Masuk</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <button class="btn btn-danger btn-icon-split float-right" onclick="window.print()">
+            <button class="btn btn-danger btn-icon-split float-right" onclick="printTable()">
                 <span class="icon text-white-50">
                     <i class="bi bi-filetype-pdf"></i>
                 </span>
@@ -38,4 +38,16 @@
                 </table>
             </div>
         </div>
+    @endsection
+
+    @section('js')
+        <script>
+            function printTable() {
+                var printContents = document.getElementById('dataTable').outerHTML;
+                var originalContents = document.body.innerHTML;
+                document.body.innerHTML = printContents;
+                window.print();
+                document.body.innerHTML = originalContents;
+            }
+        </script>
     @endsection

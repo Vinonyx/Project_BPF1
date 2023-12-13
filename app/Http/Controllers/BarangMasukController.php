@@ -6,6 +6,7 @@ use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class BarangMasukController extends Controller
 {
@@ -58,8 +59,9 @@ class BarangMasukController extends Controller
             $barang->quantity += $request->tambahStock;
             $barang->save();
         }
+        Alert::success('Success', 'Data Berhasil Ditambah!');
 
-        return redirect('/barang-masuk')->with('success', 'Data berhasil Ditambah!');
+        return redirect('/barang-masuk');
     }
 
     /**3

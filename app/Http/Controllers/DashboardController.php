@@ -31,7 +31,7 @@ class DashboardController extends Controller
             'title' => 'Dashboard',
         );
 
-        return view('dashboard', $data);
+        return view('dashboard', $data)->with('success', 'Data berhasil Ditambah!');
     }
 
     public function barang_masuk()

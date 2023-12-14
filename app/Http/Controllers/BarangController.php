@@ -91,6 +91,9 @@ class BarangController extends Controller
         $barang->delete();
 
         Alert::success('Berhasil', 'Data Berhasil Dihapus!');
+        // $title = 'Delete User!';
+        // $text = "Are you sure you want to delete?";
+        // confirmDelete($title, $text);
 
         return redirect('/list');
     }

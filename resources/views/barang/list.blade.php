@@ -40,10 +40,6 @@
                                     <a href="#modalHapus{{ $b->id }}" class="btn btn-danger" data-bs-toggle="modal">
                                         <i class="bi bi-trash"></i>
                                     </a>
-                                    {{-- <form action="/list/destroy/{{ $b->id }}" method="get">
-                                        @csrf
-                                        <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
-                                    </form> --}}
                                 </td>
                             </tr>
                         @endforeach

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Notifications\BarangNotification;
+use Illuminate\Support\Facades\Notification;
 
 
 class BarangController extends Controller
@@ -44,6 +46,8 @@ class BarangController extends Controller
             'harga' => $request->harga,
         ]);
         Alert::success('Success', 'Data Berhasil Ditambah!');
+        Notification::send(auth()->user(), new BarangNotification());
+
 
         return redirect()->back();
     }

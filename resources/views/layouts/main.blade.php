@@ -206,7 +206,7 @@
                                 <!-- Dropdown - Alerts -->
                                 @if (auth()->user()->unreadNotifications->count() > 0)
                                     @foreach (auth()->user()->unreadNotifications as $notification)
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <div class="dropdown-item d-flex align-items-center" href="#">
                                             <div class="mr-3">
                                                 <div class="icon-circle bg-primary">
                                                     <i class="fas fa-file-alt text-white"></i>
@@ -219,9 +219,8 @@
                                                 <span
                                                     class="font-weight-bold">{{ $notification->data['message'] }}</span>
                                             </div>
-                                        </a>
+                                        </div>
                                     @endforeach
-                                    <hr>
                                 @else
                                     <div class="dropdown-item">
                                         Tidak ada notifikasi yang belum dibaca.

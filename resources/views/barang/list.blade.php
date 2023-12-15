@@ -66,7 +66,13 @@
                             </div>
                             <div class="mb-3">
                                 <label for="satuan" class="col-form-label">Satuan</label>
-                                <input type="text" class="form-control" name="satuan" id="satuan">
+                                <select name="satuan" id="satuan" class="form-control">
+                                    <option value="pcs">pcs</option>
+                                    <option value="lsn">lsn</option>
+                                    <option value="set">set</option>
+                                </select>
+                                {{-- <label for="satuan" class="col-form-label">Satuan</label>
+                                <input type="text" class="form-control" name="satuan" id="satuan"> --}}
                             </div>
                             <div class="mb-3">
                                 <label for="harga" class="col-form-label">Harga</label>

@@ -25,7 +25,7 @@
                                 <td>{{ $b->nama }}</td>
                                 <td>{{ $b->quantity }}</td>
                                 <td>{{ $b->satuan }}</td>
-                                <td>{{ $b->harga }}</td>
+                                <td>Rp. {{ $b->harga }}</td>
                                 <td>
                                     <a href="#modalTambah{{ $b->id }}" class="btn btn-primary btn-icon-split"
                                         data-bs-toggle="modal">

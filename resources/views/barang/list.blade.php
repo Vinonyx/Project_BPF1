@@ -32,7 +32,7 @@
                                 <td>{{ $b->nama }}</td>
                                 <td>{{ $b->quantity }}</td>
                                 <td>{{ $b->satuan }}</td>
-                                <td>{{ $b->harga }}</td>
+                                <td>Rp. {{ $b->harga }}</td>
                                 <td>
                                     <a href="#modalEdit{{ $b->id }}" class="btn btn-warning" data-bs-toggle="modal">
                                         <i class="bi bi-pencil-square"></i>

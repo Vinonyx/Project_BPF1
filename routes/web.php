@@ -29,6 +29,8 @@ Auth::routes();
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/chart-barang_masuk', [DashboardController::class, 'barang_masuk'])->name('chart.barang_masuk');
 Route::get('/chart-barang_keluar', [DashboardController::class, 'barang_keluar'])->name('chart.barang_keluar');
+Route::post('/profile/editNama/{id}', [DashboardController::class, 'editNama'])->name('profile.editNama');
+Route::post('/profile/editEmail/{id}', [DashboardController::class, 'editEmail'])->name('profile.editEmail');
 
 //List Barang
 Route::get('/list', [BarangController::class, 'index'])->name('list');

@@ -51,7 +51,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <i class=""></i>
                 </div>
                 <div class="sidebar-brand-text mx-3">MANDIRI JAYA</div>
             </a>
@@ -62,7 +62,7 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item {{ Route::is('dashboard') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('dashboard') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="bi bi-house"></i>
                     <span>Dashboard</span></a>
             </li>
 
@@ -372,12 +372,17 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="" method="POST">
+                        <form action="/profile/editNama/{{ $pr->id }}" method="POST">
                             @csrf
                             <div class="mb-3">
                                 <label for="nama" class="col-form-label">Nama</label>
-                                <input type="text" class="form-control" name="nama" id="nama"
+                                <input type="text" class="form-control" name="name" id="name"
                                     value="{{ $pr->name }}">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Edit</button>
                             </div>
                         </form>
                     </div>
@@ -399,12 +404,17 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="" method="POST">
+                        <form action="/profile/editEmail/{{ $pro->id }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="nama" class="col-form-label">Email</label>
-                                <input type="text" class="form-control" name="nama" id="nama"
+                                <label for="email" class="col-form-label">Email</label>
+                                <input type="text" class="form-control" name="email" id="email"
                                     value="{{ $pro->email }}">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Edit</button>
                             </div>
                         </form>
                     </div>

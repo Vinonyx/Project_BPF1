@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                             <i class="bi bi-box-fill fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            <i class="bi bi-box-seam fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>

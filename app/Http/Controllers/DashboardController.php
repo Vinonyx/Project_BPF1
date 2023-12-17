@@ -8,6 +8,7 @@ use App\Models\BarangMasuk;
 use App\Models\BarangKeluar;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class DashboardController extends Controller
 {
@@ -60,5 +61,26 @@ class DashboardController extends Controller
             ->get();
 
         return response()->json($stocks);
+    }
+
+    public function editNama(Request $request, $id) {
+        $user = User::find($id);
+        $user->update([
+            'name' => $request->name,
+        ]);
+        Alert::success('Success', 'Nama Berhasil Diubah!');
+
+        return redirect()->back();
+    }
+
+    public function editEmail(Request $request, $id)
+    {
+        $user = User::find($id);
+        $user->update([
+            'email' => $request->email,
+        ]);
+        Alert::success('Success', 'Email Berhasil Diubah!');
+
+        return redirect()->back();
     }
 }

@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\BarangMasuk;
 use App\Models\BarangKeluar;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 
 class DashboardController extends Controller
 {
@@ -30,10 +30,13 @@ class DashboardController extends Controller
     {
         $data = array(
             'title' => 'Dashboard',
+            'profile' => User::all(),
+            'latestDataMasuk' => BarangMasuk::latest()->first(),
+            'latestDataKeluar' => BarangKeluar::latest()->first(),
         );
         $data['barang_masuk'] = BarangMasuk::select(DB::raw('SUM(quantity) as total_barang_masuk'))->get();
         $data['barang_keluar'] = BarangKeluar::select(DB::raw('SUM(quantity) as total_barang_keluar'))->get();
-        
+
         return view('dashboard', $data);
     }
 

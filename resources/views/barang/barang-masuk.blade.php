@@ -79,11 +79,11 @@
                                 <hr>
                                 <div class="mb-3">
                                     <label for="tambahStock" class="col-form-label">Tambah Stock</label>
-                                    <input type="number" class="form-control" name="tambahStock" id="tambahStock">
+                                    <input type="number" class="form-control" name="tambahStock" id="tambahStock" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="tanggal_masuk" class="col-form-label">Tanggal Masuk</label>
-                                    <input type="date" class="form-control" name="tanggal_masuk" id="tanggal_masuk">
+                                    <input type="date" class="form-control" name="tanggal_masuk" id="tanggal_masuk" required>
                                 </div>
                         </div>
                         <div class="modal-footer">

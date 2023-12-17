@@ -54,7 +54,9 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Barang</h1>
-                        <button type="button" class="btn btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <form action="/list/store" method="POST">
@@ -62,21 +64,20 @@
                             <input type="hidden" class="form-control" name="quantity" id="quantity" value="0">
                             <div class="mb-3">
                                 <label for="nama" class="col-form-label">Nama Barang</label>
-                                <input type="text" class="form-control" name="nama" id="nama">
+                                <input type="text" class="form-control" name="nama" id="nama" required>
                             </div>
                             <div class="mb-3">
                                 <label for="satuan" class="col-form-label">Satuan</label>
-                                <select name="satuan" id="satuan" class="form-control">
+                                <select name="satuan" id="satuan" class="form-control" required>
+                                    <option value="">Pilih Satuan</option>
                                     <option value="pcs">pcs</option>
                                     <option value="lsn">lsn</option>
                                     <option value="set">set</option>
                                 </select>
-                                {{-- <label for="satuan" class="col-form-label">Satuan</label>
-                                <input type="text" class="form-control" name="satuan" id="satuan"> --}}
                             </div>
                             <div class="mb-3">
                                 <label for="harga" class="col-form-label">Harga</label>
-                                <input type="number" class="form-control" name="harga" id="harga">
+                                <input type="number" class="form-control" name="harga" id="harga" required>
                             </div>
                     </div>
                     <div class="modal-footer">
@@ -96,8 +97,9 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Barang</h1>
-                            <button type="button" class="btn btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                            <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
                         </div>
                         <div class="modal-body">
                             <form action="/list/update/{{ $br->id }}" method="POST">
@@ -137,16 +139,16 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                            <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">×</span>
                             </button>
                         </div>
-                        <div class="modal-body">Hapus Data</div>
+                        <div class="modal-body">Apakah ingin menghapus data ini?</div>
                         <form action="/list/destroy/{{ $bar->id }}" method="GET">
                             @csrf
                             <div class="modal-footer">
                                 <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                                <button class="btn btn-primary" type="submit">
+                                <button class="btn btn-danger" type="submit">
                                     Hapus
                                 </button>
                             </div>

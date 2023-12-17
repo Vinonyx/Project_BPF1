@@ -75,12 +75,12 @@
             </div>
             <li class="nav-item {{ Route::is('list') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('list') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="bi bi-boxes"></i>
                     <span>List Barang</span></a>
             </li>
             <li class="nav-item {{ Route::is('barang-masuk') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('barang-masuk') }}">
-                    <i class="bi bi-boxes"></i>
+                    <i class="bi bi-box-seam"></i>
                     <span>Barang Masuk</span></a>
             </li>
             <li class="nav-item {{ Route::is('barang-keluar') ? 'active' : '' }}">
@@ -97,12 +97,12 @@
             </div>
             <li class="nav-item {{ Route::is('history-barang-masuk') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('history-barang-masuk') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="bi bi-files"></i>
                     <span>History Barang Masuk</span></a>
             </li>
             <li class="nav-item {{ Route::is('history-barang-keluar') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('history-barang-keluar') }}">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <i class="bi bi-files"></i>
                     <span>History Barang Keluar</span></a>
             </li>
 
@@ -153,57 +153,28 @@
                             </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
-                        {{-- <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span
-                                    class="badge badge-danger badge-counter">{{ auth()->user()->unreadNotifications->count() }}</span>
-                            </a>
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Notifikasi
-                                </h6>
-                                <!-- Dropdown - Alerts -->
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    @if (auth()->user()->unreadNotifications->count() > 0)
-                                        <div class="mr-3">
-                                            <div class="icon-circle bg-primary">
-                                                <i class="fas fa-file-alt text-white"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            @foreach (auth()->user()->unreadNotifications as $notification)
-                                                <div class="small text-gray-500">
-                                                    {{ $notification->created_at->format('Y-m-d H:i:s') }}</div>
-                                                <span
-                                                    class="font-weight-bold">{{ $notification->data['message'] }}</span>
-                                            @endforeach
-                                        </div>
-                                        <hr>
-                                    @else
-                                        <div>Tidak ada notifikasi yang belum dibaca.</div>
-                                    @endif
-                                </a>
-                        </li> --}}
-
+                        {{-- Notification --}}
                         <li class="nav-item dropdown no-arrow mx-1">
                             <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-bell fa-fw"></i>
                                 <!-- Counter - Alerts -->
-                                <span
-                                    class="badge badge-danger badge-counter">{{ auth()->user()->unreadNotifications->count() }}</span>
+                                @php
+                                    $unreadNotificationCount = auth()
+                                        ->user()
+                                        ->unreadNotifications->count();
+                                @endphp
+                                @if ($unreadNotificationCount > 0)
+                                    <span
+                                        class="badge badge-danger badge-counter">{{ $unreadNotificationCount }}</span>
+                                @endif
                             </a>
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="alertsDropdown">
                                 <h6 class="dropdown-header">
                                     Notifikasi
                                 </h6>
-                                <!-- Dropdown - Alerts -->
+                                <!-- Dropdown - Notifications -->
                                 @if (auth()->user()->unreadNotifications->count() > 0)
                                     @foreach (auth()->user()->unreadNotifications as $notification)
                                         <div class="dropdown-item d-flex align-items-center" href="#">
@@ -219,16 +190,31 @@
                                                 <span
                                                     class="font-weight-bold">{{ $notification->data['message'] }}</span>
                                             </div>
+                                            @if (!$notification->read_at)
+                                                <span class="ml-auto badge badge-danger badge-counter">Baru</span>
+                                            @endif
                                         </div>
                                     @endforeach
                                 @else
-                                    <div class="dropdown-item">
-                                        Tidak ada notifikasi yang belum dibaca.
-                                    </div>
+                                    @foreach (auth()->user()->readNotifications as $notification)
+                                        <div class="dropdown-item d-flex align-items-center" href="#">
+                                            <div class="mr-3">
+                                                <div class="icon-circle bg-primary">
+                                                    <i class="fas fa-file-alt text-white"></i>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="small text-gray-500">
+                                                    {{ $notification->created_at->format('Y-m-d H:i:s') }}
+                                                </div>
+                                                <span
+                                                    class="font-weight-bold">{{ $notification->data['message'] }}</span>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 @endif
                             </div>
                         </li>
-
 
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
@@ -236,12 +222,12 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
                                     class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                                {{-- <img class="img-profile rounded-circle" src="img/undraw_profile.svg"> --}}
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a href="#modalProfile" class="dropdown-item" data-bs-toggle="modal">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -276,7 +262,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; Davin Williem</span>
                     </div>
                 </div>
             </footer>
@@ -299,12 +285,12 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Logout</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-body">Apakah ingin logout?</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                     <a class="btn btn-primary" href="{{ route('logout') }}"
@@ -316,6 +302,116 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal Profile-->
+    @foreach ($profile as $p)
+        <div class="modal fade" id="modalProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-weight-bold" id="exampleModalLabel">Profile</h5>
+                        <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col">
+                                <span class="text-gray-500">Nama</span>
+                                <div class="font-weight-bold mb-2">
+                                    {{ $p->name }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a href="#modalEditNama" data-bs-toggle="modal"
+                                    class="btn btn-primary mb-2 mt-2 float-right">
+                                    Edit
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <span class="text-gray-500">Email</span>
+                                <div class="font-weight-bold mb-2">
+                                    {{ $p->email }}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <a href="#modalEditEmail" data-bs-toggle="modal"
+                                    class="btn btn-primary mb-2 mt-2 float-right">
+                                    Edit
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <form action="" method="GET">
+                        @csrf
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                            <button class="btn btn-danger" type="submit">
+                                Hapus
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    {{-- Modal Edit Nama --}}
+    @foreach ($profile as $pr)
+        <div class="modal fade" id="modalEditNama" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-weight-bold" id="exampleModalLabel">Edit Nama</h5>
+                        <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="nama" class="col-form-label">Nama</label>
+                                <input type="text" class="form-control" name="nama" id="nama"
+                                    value="{{ $pr->name }}">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+
+    {{-- Modal Edit Email --}}
+    @foreach ($profile as $pro)
+        <div class="modal fade" id="modalEditEmail" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title font-weight-bold" id="exampleModalLabel">Edit Email</h5>
+                        <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="nama" class="col-form-label">Email</label>
+                                <input type="text" class="form-control" name="nama" id="nama"
+                                    value="{{ $pro->email }}">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
 
     <!-- Axios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
@@ -349,6 +445,20 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
         integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('.nav-link.dropdown-toggle').on('click', function() {
+                // Mengirim request ke backend untuk menandai notifikasi sebagai sudah dibaca
+                $.ajax({
+                    type: 'GET',
+                    url: '/mark-as-read',
+                    success: function(response) {
+                        $('.badge-counter').text('0').hide();
+                    },
+                });
+            });
+        });
     </script>
     @yield('js')
 

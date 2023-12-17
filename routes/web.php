@@ -33,6 +33,7 @@ Route::get('/chart-barang_keluar', [DashboardController::class, 'barang_keluar']
 //List Barang
 Route::get('/list', [BarangController::class, 'index'])->name('list');
 Route::post('/list/store', [BarangController::class, 'store'])->name('list.store');
+Route::get('/mark-as-read', [BarangController::class, 'markAsRead'])->name('markAsRead');
 Route::get('/list/destroy/{id}', [BarangController::class, 'destroy'])->name('list.destroy');
 Route::post('/list/update/{id}', [BarangController::class, 'update'])->name('list.edit');
 

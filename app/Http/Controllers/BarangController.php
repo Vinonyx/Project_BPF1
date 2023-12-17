@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Notifications\BarangNotification;
 use Illuminate\Support\Facades\Notification;
-
 
 class BarangController extends Controller
 {
@@ -21,6 +21,7 @@ class BarangController extends Controller
         $data = array(
             'title' => 'List Barang',
             'barang' => Barang::all(),
+            'profile' => User::all(),
         );
 
         return view('barang.list', $data);
@@ -48,8 +49,14 @@ class BarangController extends Controller
         Alert::success('Success', 'Data Berhasil Ditambah!');
         Notification::send(auth()->user(), new BarangNotification());
 
-
         return redirect()->back();
+    }
+
+    public function markAsRead()
+    {
+        auth()->user()->unreadNotifications->markAsRead();
+
+        return response()->json(['success' => true]);
     }
 
     /**

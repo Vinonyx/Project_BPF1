@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\BarangKeluar;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -18,6 +19,7 @@ class BarangKeluarController extends Controller
         $data = array(
             'title' => 'Halaman Barang Keluar',
             'barang' => Barang::all(),
+            'profile' => User::all(),
         );
 
         return view('barang.barang-keluar', $data);
@@ -28,6 +30,7 @@ class BarangKeluarController extends Controller
         $data = array(
             'title' => 'History Barang Keluar',
             'barang_keluar' => BarangKeluar::all(),
+            'profile' => User::all(),
         );
 
         return view('barang.history-barang-keluar', $data);

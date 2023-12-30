@@ -84,17 +84,6 @@ class BarangKeluarController extends Controller
         }
 
         return redirect()->back();
-
-
-        // $barang = Barang::find($id);
-
-        // if ($barang) {
-        //     $barang->quantity -= $request->stock_keluar;
-        //     $barang->save();
-        // }
-        // Alert::success('Success', 'Data Berhasil Ditambah!');
-
-        // return redirect('/barang-keluar');
     }
 
     /**

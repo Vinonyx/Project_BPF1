@@ -11,10 +11,13 @@ class BarangNotification extends Notification
 {
     use Queueable;
 
-    public function __construct()
+    public $type;
+
+    public function __construct($type)
     {
-        //
+        $this->type = $type;
     }
+
 
     public function via($notifiable)
     {
@@ -23,10 +26,19 @@ class BarangNotification extends Notification
 
     public function toDatabase($notifiable)
     {
+        $message = '';
+
+        if ($this->type === 'barang') {
+            $message = 'Barang baru telah ditambahkan!';
+        } elseif ($this->type === 'barang_masuk') {
+            $message = 'Ada barang masuk!';
+        } elseif ($this->type === 'barang_keluar') {
+            $message = 'Ada barang keluar!';
+        }
+
         return [
-            'message' => 'Barang baru telah ditambahkan!',
+            'message' => $message,
             'created_at' => now(),
-            // Informasi lain yang ingin Anda tampilkan
         ];
     }
 }

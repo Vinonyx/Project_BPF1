@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Notifications\BarangNotification;
+use Illuminate\Support\Facades\Notification;
 
 class BarangKeluarController extends Controller
 {
@@ -29,7 +31,7 @@ class BarangKeluarController extends Controller
     {
         $data = array(
             'title' => 'History Barang Keluar',
-            'barang_keluar' => BarangKeluar::all(),
+            'barang_keluar' => BarangKeluar::orderBy('created_at', 'desc')->get(),
             'profile' => User::all(),
         );
 

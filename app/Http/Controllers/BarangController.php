@@ -47,7 +47,7 @@ class BarangController extends Controller
             'harga' => $request->harga,
         ]);
         Alert::success('Success', 'Data Berhasil Ditambah!');
-        Notification::send(auth()->user(), new BarangNotification());
+        Notification::send(auth()->user(), new BarangNotification('barang'));
 
         return redirect()->back();
     }
@@ -70,10 +70,11 @@ class BarangController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Barang $barang)
+    public function edit($id)
     {
         //
     }
+
 
     /**
      * Update the specified resource in storage.

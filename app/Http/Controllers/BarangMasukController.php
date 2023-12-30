@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Notifications\BarangNotification;
+use Illuminate\Support\Facades\Notification;
 
 class BarangMasukController extends Controller
 {
@@ -29,7 +31,7 @@ class BarangMasukController extends Controller
     {
         $data = array(
             'title' => 'History Barang Masuk',
-            'barang_masuk' => BarangMasuk::all(),
+            'barang_masuk' => BarangMasuk::orderBy('created_at', 'desc')->get(),
             'profile' => User::all(),
         );
 
@@ -63,6 +65,7 @@ class BarangMasukController extends Controller
             $barang->save();
         }
         Alert::success('Success', 'Data Berhasil Ditambah!');
+        Notification::send(auth()->user(), new BarangNotification('barang_masuk'));
 
         return redirect('/barang-masuk');
     }

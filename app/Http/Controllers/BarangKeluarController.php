@@ -51,22 +51,50 @@ class BarangKeluarController extends Controller
      */
     public function store(Request $request, $id)
     {
-        BarangKeluar::create([
-            'nama' => $request->nama,
-            'quantity' => $request->stock_keluar,
-            'satuan' => $request->satuan,
-            'tanggal_keluar' => $request->tanggal_keluar,
-        ]);
-
         $barang = Barang::find($id);
 
         if ($barang) {
-            $barang->quantity -= $request->stock_keluar;
-            $barang->save();
-        }
-        Alert::success('Success', 'Data Berhasil Ditambah!');
+            if ($barang->stok >= $request->jumlah_keluar && $request->jumlah_keluar > 0) {
+                $barangKeluar = new BarangKeluar([
+                    'nama' => $request->nama,
+                    'quantity' => $request->stock_keluar,
+                    'satuan' => $request->satuan,
+                    'tanggal_keluar' => $request->tanggal_keluar,
+                ]);
+                $barangKeluar->save();
 
-        return redirect('/barang-keluar');
+                $barang->stok -= $request->jumlah_keluar;
+                $barang->save();
+
+                $data = array(
+                    'title' => 'Barang Masuk | Inv-Cafe',
+                    'barang_keluar' => BarangKeluar::all(),
+                    'data_barang' => Barang::all(),
+                );
+
+                Alert::success('Berhasil', 'Data berhasil dikurangi!');
+                return view('gudang.barang_keluar', $data);
+            } elseif ($barang->stok < $request->jumlah_keluar) {
+                Alert::error('Gagal', 'Jumlah Permintaan Lebih Dari Stok');
+            } else {
+                Alert::error('Gagal', 'Jumlah Barang yang Dikeluarkan Tidak Valid');
+            }
+        } else {
+            Alert::error('Gagal', 'Barang Tidak Ditemukan!');
+        }
+
+        return redirect()->back();
+
+
+        // $barang = Barang::find($id);
+
+        // if ($barang) {
+        //     $barang->quantity -= $request->stock_keluar;
+        //     $barang->save();
+        // }
+        // Alert::success('Success', 'Data Berhasil Ditambah!');
+
+        // return redirect('/barang-keluar');
     }
 
     /**

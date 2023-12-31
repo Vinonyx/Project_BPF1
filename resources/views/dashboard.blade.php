@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <div class="col-auto">
-                             <i class="bi bi-box-fill fa-2x text-gray-300"></i>
+                            <i class="bi bi-box-fill fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -96,8 +96,13 @@
 
     <!-- Area Chart -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card-header py-3" style="display: flex; justify-content: space-between; align-items: center;">
             <h6 class="m-0 font-weight-bold text-primary">Jumlah Barang Masuk Per-Bulan</h6>
+            <select id="select-tahun-masuk" class="form-control" style="width: 10%">
+                <option value="2023" selected>2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+            </select>
         </div>
         <div class="card-body">
             <div class="chart-area">
@@ -105,9 +110,15 @@
             </div>
         </div>
     </div>
+
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card-header py-3" style="display: flex; justify-content: space-between; align-items: center;">
             <h6 class="m-0 font-weight-bold text-primary">Jumlah Barang Keluar Per-Bulan</h6>
+            <select id="select-tahun-keluar" class="form-control" style="width: 10%">
+                <option value="2023" selected>2023</option>
+                <option value="2022">2022</option>
+                <option value="2021">2021</option>
+            </select>
         </div>
         <div class="card-body">
             <div class="chart-area">

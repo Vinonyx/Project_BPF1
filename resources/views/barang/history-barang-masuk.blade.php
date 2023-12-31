@@ -41,10 +41,15 @@
     @endsection
 
     @section('js')
-        <script>
+       <script>
             function printTable() {
                 var printContents = document.getElementById('dataTable').outerHTML;
                 var originalContents = document.body.innerHTML;
+
+                // Menambahkan judul di atas halaman cetak
+                var title = '<h1 class="text-center mb-4">History Barang Masuk</h1>';
+                printContents = title + printContents;
+
                 document.body.innerHTML = printContents;
                 window.print();
                 document.body.innerHTML = originalContents;

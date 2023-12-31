@@ -41,29 +41,31 @@ class DashboardController extends Controller
         return view('dashboard', $data);
     }
 
-    public function barang_masuk()
+    public function barang_masuk(Request $request)
     {
-        $currentYear = Carbon::now()->year;
+        $selectedYear = $request->input('year', Carbon::now()->year);
         $stocks = BarangMasuk::select(DB::raw('SUM(quantity) as total_quantity'), DB::raw('MONTH(tanggal_masuk) as month'))
-            ->whereYear('tanggal_masuk', $currentYear)
+            ->whereYear('tanggal_masuk', $selectedYear)
             ->groupBy(DB::raw('MONTH(tanggal_masuk)'))
             ->get();
 
         return response()->json($stocks);
     }
 
-    public function barang_keluar()
+
+    public function barang_keluar(Request $request)
     {
-        $currentYear = Carbon::now()->year;
+        $selectedYear = $request->input('year', Carbon::now()->year);
         $stocks = BarangKeluar::select(DB::raw('SUM(quantity) as total_quantity'), DB::raw('MONTH(tanggal_keluar) as month'))
-            ->whereYear('tanggal_keluar', $currentYear)
+        ->whereYear('tanggal_keluar', $selectedYear)
             ->groupBy(DB::raw('MONTH(tanggal_keluar)'))
             ->get();
 
         return response()->json($stocks);
     }
 
-    public function editNama(Request $request, $id) {
+    public function editNama(Request $request, $id)
+    {
         $user = User::find($id);
         $user->update([
             'name' => $request->name,

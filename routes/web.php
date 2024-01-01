@@ -31,6 +31,7 @@ Route::get('/chart-barang_masuk', [DashboardController::class, 'barang_masuk'])-
 Route::get('/chart-barang_keluar', [DashboardController::class, 'barang_keluar'])->name('chart.barang_keluar');
 Route::post('/profile/editNama/{id}', [DashboardController::class, 'editNama'])->name('profile.editNama');
 Route::post('/profile/editEmail/{id}', [DashboardController::class, 'editEmail'])->name('profile.editEmail');
+Route::post('/user/store', [DashboardController::class, 'store'])->name('user.store');
 
 //List Barang
 Route::get('/list', [BarangController::class, 'index'])->name('list');

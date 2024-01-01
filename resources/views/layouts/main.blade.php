@@ -229,7 +229,11 @@
                                 aria-labelledby="userDropdown">
                                 <a href="#modalProfile" class="dropdown-item" data-bs-toggle="modal">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Profile
+                                    Informasi
+                                </a>
+                                <a href="#modalTambahUser" class="dropdown-item" data-bs-toggle="modal">
+                                    <i class="fas fa-user-plus fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Tambah User
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal"
@@ -303,14 +307,14 @@
         </div>
     </div>
 
-    <!-- Modal Profile-->
+    <!-- Modal Informasi-->
     @foreach ($profile as $p)
         <div class="modal fade" id="modalProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title font-weight-bold" id="exampleModalLabel">Profile</h5>
+                        <h5 class="modal-title font-weight-bold" id="exampleModalLabel">Informasi</h5>
                         <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
@@ -344,15 +348,21 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-                    <form action="" method="GET">
-                        @csrf
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                            <button class="btn btn-danger" type="submit">
-                                Hapus
-                            </button>
+                        <div class="dropdown-divider"></div>
+                        <div class="row">
+                            <div class="col">
+                                <span class="text-gray-500">Daftar User</span>
+                                @foreach ($profile as $user)
+                                    <div class="font-weight-bold mb-2">
+                                        {{ $user->email }}
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                    </div>
                     </form>
                 </div>
             </div>
@@ -422,6 +432,43 @@
             </div>
         </div>
     @endforeach
+
+    <!-- Modal Tambah User-->
+    <div class="modal fade" id="modalTambahUser" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah User</h1>
+                    <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/user/store" method="POST">
+                        @csrf
+                        <input type="hidden" class="form-control" name="quantity" id="quantity" value="0">
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Nama</label>
+                            <input type="text" class="form-control" name="name" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="col-form-label">Email</label>
+                            <input type="email" class="form-control" name="email" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="col-form-label">Password</label>
+                            <input type="password" class="form-control" name="password" id="password" required>
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Axios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>

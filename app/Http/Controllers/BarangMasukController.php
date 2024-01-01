@@ -63,12 +63,12 @@ class BarangMasukController extends Controller
             'tanggal_masuk' => $request->tanggal_masuk,
         ]);
 
-        $barang = Barang::find($id);
+            $barang = Barang::find($id);
 
-        if ($barang) {
-            $barang->quantity += $request->tambahStock;
-            $barang->save();
-        }
+            if ($barang) {
+                $barang->quantity += $request->tambahStock;
+                $barang->save();
+            }
         Alert::success('Success', 'Data Berhasil Ditambah!');
         Notification::send(auth()->user(), new BarangNotification('barang_masuk'));
 

@@ -9,6 +9,8 @@ use App\Models\BarangKeluar;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
@@ -34,9 +36,10 @@ class DashboardController extends Controller
             'profile' => User::all(),
             'latestDataMasuk' => BarangMasuk::latest()->first(),
             'latestDataKeluar' => BarangKeluar::latest()->first(),
+            'barang_masuk' => BarangMasuk::select(DB::raw("SUM(quantity) as total_barang_masuk"))->get(),
+            'barang_keluar' => BarangKeluar::select(DB::raw("SUM(quantity) as total_barang_keluar"))->get(),
+            'loggedInUserEmail' => Auth::user()->email,
         );
-        $data['barang_masuk'] = BarangMasuk::select(DB::raw('SUM(quantity) as total_barang_masuk'))->get();
-        $data['barang_keluar'] = BarangKeluar::select(DB::raw('SUM(quantity) as total_barang_keluar'))->get();
 
         return view('dashboard', $data);
     }
@@ -57,7 +60,7 @@ class DashboardController extends Controller
     {
         $selectedYear = $request->input('year', Carbon::now()->year);
         $stocks = BarangKeluar::select(DB::raw('SUM(quantity) as total_quantity'), DB::raw('MONTH(tanggal_keluar) as month'))
-        ->whereYear('tanggal_keluar', $selectedYear)
+            ->whereYear('tanggal_keluar', $selectedYear)
             ->groupBy(DB::raw('MONTH(tanggal_keluar)'))
             ->get();
 
@@ -82,6 +85,18 @@ class DashboardController extends Controller
             'email' => $request->email,
         ]);
         Alert::success('Success', 'Email Berhasil Diubah!');
+
+        return redirect()->back();
+    }
+
+    public function store(Request $request)
+    {
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        Alert::success('Success', 'Data User Berhasil Ditambah!');
 
         return redirect()->back();
     }

@@ -353,12 +353,17 @@
                             <div class="col">
                                 <span class="text-gray-500">Daftar User</span>
                                 @foreach ($profile as $user)
-                                    <div class="font-weight-bold mb-2">
+                                    <div class="font-weight-bold mb-3">
                                         {{ $user->email }}
+                                        <a href="#modalHapusUser{{ $user->id }}" data-bs-toggle="modal"
+                                            class="btn btn-danger btn-sm float-right">
+                                            Hapus
+                                        </a>
                                     </div>
                                 @endforeach
                             </div>
                         </div>
+
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
@@ -469,6 +474,33 @@
             </div>
         </div>
     </div>
+
+    @foreach ($profile as $prof)
+            <!-- Modal Hapus User-->
+            <div class="modal fade" id="modalHapusUser{{ $prof->id }}" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
+                            <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Apakah ingin menghapus user ini?</div>
+                        <form action="/user/destroy/{{ $prof->id }}" method="GET">
+                            @csrf
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                                <button class="btn btn-danger" type="submit">
+                                    Hapus
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
 
     <!-- Axios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>

@@ -100,4 +100,18 @@ class DashboardController extends Controller
 
         return redirect()->back();
     }
+
+    public function destroyUser($id)
+    {
+        $user = User::find($id);
+
+        $user->delete();
+
+        Alert::success('Berhasil', 'User Berhasil Dihapus!');
+        // $title = 'Delete User!';
+        // $text = "Are you sure you want to delete?";
+        // confirmDelete($title, $text);
+
+        return redirect()->back();
+    }
 }

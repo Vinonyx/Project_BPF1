@@ -58,37 +58,26 @@ class BarangKeluarController extends Controller
     {
         $barang = Barang::find($id);
 
-        if ($barang) {
-            if ($barang->stok >= $request->jumlah_keluar && $request->jumlah_keluar > 0) {
-                $barangKeluar = new BarangKeluar([
-                    'nama' => $request->nama,
-                    'quantity' => $request->stock_keluar,
-                    'satuan' => $request->satuan,
-                    'tanggal_keluar' => $request->tanggal_keluar,
-                ]);
-                $barangKeluar->save();
+        if ($barang && $barang->quantity >= $request->stock_keluar && $barang->quantity > 0) {
+            BarangKeluar::create([
+                'nama' => $request->nama,
+                'quantity' => $request->stock_keluar,
+                'satuan' => $request->satuan,
+                'tanggal_keluar' => $request->tanggal_keluar,
+            ]);
 
-                $barang->stok -= $request->jumlah_keluar;
-                $barang->save();
+            $barang->quantity -= $request->stock_keluar;
+            $barang->save();
 
-                $data = array(
-                    'title' => 'Barang Masuk | Inv-Cafe',
-                    'barang_keluar' => BarangKeluar::all(),
-                    'data_barang' => Barang::all(),
-                );
+            Alert::success('Success', 'Data Berhasil Ditambah!');
+            Notification::send(auth()->user(), new BarangNotification('barang_keluar'));
 
-                Alert::success('Berhasil', 'Data berhasil dikurangi!');
-                return view('gudang.barang_keluar', $data);
-            } elseif ($barang->stok < $request->jumlah_keluar) {
-                Alert::error('Gagal', 'Jumlah Permintaan Lebih Dari Stok');
-            } else {
-                Alert::error('Gagal', 'Jumlah Barang yang Dikeluarkan Tidak Valid');
-            }
+            return redirect('/barang-keluar');
         } else {
-            Alert::error('Gagal', 'Barang Tidak Ditemukan!');
+            Alert::error('Error', 'Stok barang tidak mencukupi atau barang tidak tersedia!');
+            return redirect('/barang-keluar');
         }
 
-        return redirect()->back();
     }
 
     /**

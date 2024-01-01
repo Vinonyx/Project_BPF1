@@ -99,7 +99,8 @@
         <div class="card-header py-3" style="display: flex; justify-content: space-between; align-items: center;">
             <h6 class="m-0 font-weight-bold text-primary">Jumlah Barang Masuk Per-Bulan</h6>
             <select id="select-tahun-masuk" class="form-control" style="width: 10%">
-                <option value="2023" selected>2023</option>
+                <option value="2024" selected>2024</option>
+                <option value="2023">2023</option>
                 <option value="2022">2022</option>
                 <option value="2021">2021</option>
             </select>

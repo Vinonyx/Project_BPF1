@@ -25,8 +25,8 @@ class BarangMasukController extends Controller
     {
         $data = array(
             'title' => 'Halaman Barang Masuk',
-            'barang_masuk' => BarangMasuk::all(),
             'barang' => Barang::all(),
+            'barang_masuk' => BarangMasuk::orderBy('tanggal_masuk', 'desc')->get(),
             'profile' => User::all(),
         );
 

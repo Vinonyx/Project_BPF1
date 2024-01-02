@@ -26,7 +26,7 @@ class BarangKeluarController extends Controller
         $data = array(
             'title' => 'Halaman Barang Keluar',
             'barang' => Barang::all(),
-            'barang_keluar' => BarangKeluar::all(),
+            'barang_keluar' => BarangKeluar::orderBy('tanggal_keluar', 'desc')->get(),
             'profile' => User::all(),
         );
 

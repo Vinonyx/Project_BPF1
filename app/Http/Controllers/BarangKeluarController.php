@@ -26,21 +26,11 @@ class BarangKeluarController extends Controller
         $data = array(
             'title' => 'Halaman Barang Keluar',
             'barang' => Barang::all(),
+            'barang_keluar' => BarangKeluar::all(),
             'profile' => User::all(),
         );
 
         return view('barang.barang-keluar', $data);
-    }
-
-    public function history()
-    {
-        $data = array(
-            'title' => 'History Barang Keluar',
-            'barang_keluar' => BarangKeluar::orderBy('created_at', 'desc')->get(),
-            'profile' => User::all(),
-        );
-
-        return view('barang.history-barang-keluar', $data);
     }
 
     /**
@@ -54,19 +44,19 @@ class BarangKeluarController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $id)
+    public function store(Request $request, $nama)
     {
-        $barang = Barang::find($id);
+        $barang = Barang::where('nama', $nama)->first();
 
-        if ($barang && $barang->quantity >= $request->stock_keluar && $barang->quantity > 0) {
+        if ($barang && $barang->quantity >= $request->quantity && $barang->quantity > 0) {
             BarangKeluar::create([
                 'nama' => $request->nama,
-                'quantity' => $request->stock_keluar,
+                'quantity' => $request->quantity,
                 'satuan' => $request->satuan,
                 'tanggal_keluar' => $request->tanggal_keluar,
             ]);
 
-            $barang->quantity -= $request->stock_keluar;
+            $barang->quantity -= $request->quantity;
             $barang->save();
 
             Alert::success('Success', 'Data Berhasil Ditambah!');
@@ -77,7 +67,17 @@ class BarangKeluarController extends Controller
             Alert::error('Error', 'Stok barang tidak mencukupi atau barang tidak tersedia!');
             return redirect('/barang-keluar');
         }
+    }
 
+    public function getSatuan(Request $request)
+    {
+        $namaBarang = $request->input('nama');
+
+        // Ambil data satuan berdasarkan nama barang dari database
+        $satuan = Barang::where('nama', $namaBarang)->value('satuan');
+
+        // Mengembalikan respons JSON dengan data satuan
+        return response()->json(['satuan' => $satuan]);
     }
 
     /**

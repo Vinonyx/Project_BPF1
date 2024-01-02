@@ -88,27 +88,6 @@
                     <i class="bi bi-truck"></i>
                     <span>Barang Keluar</span></a>
             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <div class="sidebar-heading">
-                History
-            </div>
-            <li class="nav-item {{ Route::is('history-barang-masuk') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('history-barang-masuk') }}">
-                    <i class="bi bi-files"></i>
-                    <span>History Barang Masuk</span></a>
-            </li>
-            <li class="nav-item {{ Route::is('history-barang-keluar') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('history-barang-keluar') }}">
-                    <i class="bi bi-files"></i>
-                    <span>History Barang Keluar</span></a>
-            </li>
-
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
-            </div>
         </ul>
         <!-- End of Sidebar -->
 
@@ -476,31 +455,31 @@
     </div>
 
     @foreach ($profile as $prof)
-            <!-- Modal Hapus User-->
-            <div class="modal fade" id="modalHapusUser{{ $prof->id }}" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
-                            <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
+        <!-- Modal Hapus User-->
+        <div class="modal fade" id="modalHapusUser{{ $prof->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Hapus Data</h5>
+                        <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Apakah ingin menghapus user ini?</div>
+                    <form action="/user/destroy/{{ $prof->id }}" method="GET">
+                        @csrf
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                            <button class="btn btn-danger" type="submit">
+                                Hapus
                             </button>
                         </div>
-                        <div class="modal-body">Apakah ingin menghapus user ini?</div>
-                        <form action="/user/destroy/{{ $prof->id }}" method="GET">
-                            @csrf
-                            <div class="modal-footer">
-                                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                                <button class="btn btn-danger" type="submit">
-                                    Hapus
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                    </form>
                 </div>
             </div>
-        @endforeach
+        </div>
+    @endforeach
 
     <!-- Axios -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>

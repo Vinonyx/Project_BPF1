@@ -69,7 +69,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="recipient-name" class="col-form-label">Satuan</label>
-                            <input type="text" class="form-control" name="satuan" id="satuan_result" value=""
+                            <input type="text" class="form-control" name="satuan" id="satuan_result" min="1"
                                 readonly>
                         </div>
                         <div class="mb-3">

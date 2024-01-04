@@ -33,6 +33,13 @@
             margin: 0;
         }
 
+        .dropdown-list.dropdown-menu {
+            min-width: 300px;
+            /* Menyesuaikan lebar */
+            font-size: 14px;
+            /* Mengubah ukuran font */
+        }
+
         /* Atur gaya lainnya untuk mencetak */
     </style>
     @yield('css')
@@ -43,7 +50,7 @@
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-        @include('sweetalert::alert')
+        {{-- @include('sweetalert::alert') --}}
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -87,6 +94,11 @@
                 <a class="nav-link" href="{{ route('barang-keluar') }}">
                     <i class="bi bi-truck"></i>
                     <span>Barang Keluar</span></a>
+            </li>
+            <li class="nav-item {{ Route::is('transaksi') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('transaksi') }}">
+                    <i class="bi bi-credit-card-fill"></i>
+                    <span>Transaksi</span></a>
             </li>
         </ul>
         <!-- End of Sidebar -->
@@ -149,7 +161,7 @@
                                 @endif
                             </a>
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
+                                aria-labelledby="alertsDropdown" style="min-width: 10px">
                                 <h6 class="dropdown-header">
                                     Notifikasi
                                 </h6>

@@ -6,6 +6,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\BarangKeluarController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\CartController;
+use App\Models\Transaksi;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
@@ -43,6 +46,9 @@ Route::post('/list/update/{id}', [BarangController::class, 'update'])->name('lis
 Route::get('/barang-masuk', [BarangMasukController::class, 'index'])->name('barang-masuk');
 Route::post('/barang-masuk/store/{nama}', [BarangMasukController::class, 'store'])->name('barang-masuk.store');
 
+// Transaksi
+Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi');
+
 // Barang Keluar
 Route::get('/barang-keluar', [BarangKeluarController::class, 'index'])->name('barang-keluar');
 Route::post('/barang-keluar/store/{nama}', [BarangKeluarController::class, 'store'])->name('barang-keluar.store');
@@ -51,3 +57,6 @@ Route::post('/barang-keluar/store/{nama}', [BarangKeluarController::class, 'stor
 Route::get('/chart-barang_masuk', [DashboardController::class, 'barang_masuk'])->name('chart.barang_masuk');
 Route::get('/chart-barang_keluar', [DashboardController::class, 'barang_keluar'])->name('chart.barang_keluar');
 Route::get('/getSatuan', [BarangMasukController::class, 'getSatuan'])->name('barang-masuk.satuan');
+
+// Cart
+Route::post('/addToCart', [CartController::class, 'store'])->name('cart.store');

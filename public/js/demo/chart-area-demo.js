@@ -257,7 +257,6 @@ let chartBarangKeluar = new Chart(barangKeluar, {
 
 const fetch = (chart, url, selectedYear) => {
     axios
-        // .get("http://localhost:8000/chart-barang_masuk?year=" + selectedYear)
         .get(url + selectedYear)
         .then((resp) => {
             var dataS = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];

@@ -114,7 +114,7 @@
                                 </table>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <a href="/cart/checkout" class="btn btn-primary">Checkout</a>
+                                    <a href="/cart/checkout" class="btn btn-primary">Submit</a>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,14 @@
 @extends('layouts.main')
 
 @section('content')
+    @if (session()->has('cart'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('cart') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <h1 class="h3 mb-4 text-gray-800">Transaksi</h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -66,65 +74,53 @@
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th class="col-1"></th>
                                             <th>No</th>
                                             <th>Nama Barang</th>
                                             <th>Satuan</th>
-                                            <th>Harga</th>
                                             <th class="col-1">Quantity</th>
-                                            <th>Action</th>
+                                            <th>Harga</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php $no = 1; ?>
+                                        @php
+                                            $totalHarga = 0; // Inisialisasi variabel total harga
+                                        @endphp
                                         @foreach ($cart as $c)
                                             <tr>
-                                                <td>{{ $no++ }}</td>
-                                                <td>{{ $c->nama }}</td>
-                                                <td>{{ $c->satuan }}</td>
-                                                <td>Rp. {{ $c->harga }}</td>
-                                                <td>{{ $c->quantity }}</td>
                                                 <td>
-                                                    <a href="#modalHapus{{ $c->id }}" class="btn btn-danger"
-                                                        data-bs-toggle="modal">
+                                                    <a href="/cart/destroy/{{ $c->id }}" class="btn btn-danger">
                                                         <i class="bi bi-trash"></i>
                                                     </a>
                                                 </td>
+                                                <td>{{ $no++ }}</td>
+                                                <td>{{ $c->nama }}</td>
+                                                <td>{{ $c->satuan }}</td>
+                                                <td>{{ $c->quantity }}</td>
+                                                <td>Rp. {{ $c->harga * $c->quantity }}</td>
                                             </tr>
-                                        @endforeach
+                                            @php
+                                                $totalHarga += $c->harga * $c->quantity; // Menambahkan harga setiap item ke total harga
+                                            @endphp
                                     </tbody>
+                                    @endforeach
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="5" class="text-center"><strong>Total</strong></td>
+                                            <td><strong>Rp. {{ $totalHarga }}</strong></td>
+                                        </tr>
+                                    </tfoot>
                                 </table>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a href="/cart/checkout" class="btn btn-primary">Checkout</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            @foreach ($cart as $ca)
-                <!-- Modal Hapus-->
-                <div class="modal fade" id="modalHapus{{ $ca->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Hapus Barang</h5>
-                                <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">Apakah ingin menghapus barang ini?</div>
-                            <form action="/list/destroy/{{ $ca->id }}" method="GET">
-                                @csrf
-                                <div class="modal-footer">
-                                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
-                                    <button class="btn btn-danger" type="submit">
-                                        Hapus
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
         @endsection
 
         @section('js')
@@ -152,20 +148,11 @@
                             success: function(response) {
                                 // Tindakan setelah data dikirim ke controller
                                 console.log(response);
-                                // Misalnya, tampilkan pesan sukses kepada pengguna
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Success',
-                                    text: 'Barang berhasil ditambahkan ke keranjang!',
-                                });
+                                location.reload();
                             },
                             error: function(err) {
-                                // Tindakan jika terjadi kesalahan
                                 console.error(err);
-                                // Misalnya, tampilkan pesan error kepada pengguna
-                                alert(
-                                    'Terjadi kesalahan. Data barang tidak dapat ditambahkan ke keranjang'
-                                );
+                                location.reload();
                             }
                         });
                     });

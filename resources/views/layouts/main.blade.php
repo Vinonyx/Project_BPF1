@@ -95,11 +95,30 @@
                     <i class="bi bi-truck"></i>
                     <span>Barang Keluar</span></a>
             </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Transaksi
+            </div>
             <li class="nav-item {{ Route::is('transaksi') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('transaksi') }}">
                     <i class="bi bi-credit-card-fill"></i>
                     <span>Transaksi</span></a>
             </li>
+            <li class="nav-item {{ Route::is('history-transaksi') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('history-transaksi') }}">
+                    <i class="bi bi-credit-card-fill"></i>
+                    <span>History Transaksi</span></a>
+            </li>
+
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
         </ul>
         <!-- End of Sidebar -->
 
@@ -186,7 +205,7 @@
                                             @endif
                                         </div>
                                     @endforeach
-                                @else
+                                @elseif (auth()->user()->readNotifications->count() > 0)
                                     @foreach (auth()->user()->readNotifications as $notification)
                                         <div class="dropdown-item d-flex align-items-center" href="#">
                                             <div class="mr-3">
@@ -203,6 +222,10 @@
                                             </div>
                                         </div>
                                     @endforeach
+                                @else
+                                    <div class="dropdown-item d-flex align-items-center" href="#">
+                                        Tidak ada notifikasi
+                                    </div>
                                 @endif
                             </div>
                         </li>

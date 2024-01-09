@@ -95,49 +95,36 @@ class TransaksiController extends Controller
             $cart->delete();
             Session::flash('cart', 'Barang Berhasil Dihapus!');
             return redirect()->back();
-            // Jika penghapusan berhasil, kirim respons JSON
-            // return response()->json(['success' => true, 'message' => 'Barang Berhasil Dihapus dari Keranjang!']);
         } else {
-            // Jika penghapusan gagal, kirim respons JSON dengan pesan error
-            return response()->json(['success' => false, 'message' => 'Gagal menghapus barang dari Keranjang. Barang tidak ditemukan.']);
+            Session::flash('cart', 'Barang Gagal Dihapus!');
+            return redirect()->back();
         }
     }
 
     public function checkout()
     {
-        // Simpan data ke dalam tabel 'transaksi'
         $transaksi = Transaksi::create([
-            'tanggal_transaksi' => Carbon::now(), // Isi dengan tanggal transaksi saat ini
-            'total_harga' => 0, // Inisialisasi total harga sementara
-            // Sesuaikan dengan struktur tabel 'transaksi' atau tabel tujuan lainnya
+            'total_harga' => 0,
         ]);
 
-        $totalHargaTransaksi = 0; // Inisialisasi variabel total harga untuk transaksi
+        $totalHargaTransaksi = 0;
 
-        // Mendapatkan semua item dari tabel 'cart'
         $cartItems = Cart::all();
 
-        // Loop melalui setiap item di keranjang
         foreach ($cartItems as $item) {
-            // Hitung total harga untuk setiap item
             $totalHargaBarang = $item->harga * $item->quantity;
 
-            // Menambahkan total harga barang ke total harga transaksi
             $totalHargaTransaksi += $totalHargaBarang;
 
-            // Simpan data ke dalam tabel 'detail_transaksi' untuk setiap item
             DetailTransaksi::create([
-                'id_transaksi' => $transaksi->id, // Set id transaksi yang baru dibuat
+                'id_transaksi' => $transaksi->id,
                 'id_barang' => $item->id_barang,
                 'quantity' => $item->quantity,
-                // Sesuaikan dengan struktur tabel 'detail_transaksi' atau tabel tujuan lainnya
             ]);
         }
 
-        // Update total harga transaksi setelah semua detail transaksi dibuat
         $transaksi->update(['total_harga' => $totalHargaTransaksi]);
 
-        // Menghapus semua data dari tabel 'cart'
         Session::flash('cart', 'Berhasil Checkout!');
         Cart::truncate();
 

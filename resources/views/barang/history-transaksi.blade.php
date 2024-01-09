@@ -20,7 +20,7 @@
                         @foreach ($transaksi as $t)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $t->tanggal_transaksi }}</td>
+                                <td>{{ $t->created_at }}</td>
                                 <td>Rp. {{ $t->total_harga }}</td>
                                 <td>
                                     <button class="btn btn-primary btn-icon-split" data-bs-toggle="modal"
